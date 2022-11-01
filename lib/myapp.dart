@@ -1,26 +1,24 @@
 import 'package:flutter/material.dart';
-import 'package:controle_financas/views/my_homepage.dart';
 
+import 'package:controle_financas/views/my_homepage.dart';
+import 'package:controle_financas/views/splashScreen';
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  const MyApp({super.key});
 
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Controle de\assets-for-api-docs\assets\material\Colors.lightBlue.png Gastos',
       theme: ThemeData(
-   
         primarySwatch: Colors.blue,
       ),
-      initialRoute: MyHomePage.nomeRota, //Rota inicial 
-      /*routes: {
-        MyHomePage.nomeRota: (context) => MyHomePage(),
-        CadastrasPessoa.nomeRota: ((context) => CadastrasPessoa())
-       // DetalhesAniversario.nomeRota: ((context) => DetalhesAniversario)
-      }*/ //Definindo as rotas daaplicação
-    );
+      home: MyHomePage(),
+            //A rota do splashscreen
+      // initialRoute: SplashScreen.nomeRota,
+      //  routes: {
+      //    SplashScreen.nomeRota: (context) => SplashScreen(),
+      );
   }
 }
-

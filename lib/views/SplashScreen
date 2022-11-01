@@ -1,0 +1,28 @@
+// import 'package:flutter/material.dart';
+
+// class SplashScreen extends StatefulWidget {
+//   static const nomeRota = "/splashscreen";
+//  __SplashScreenState createState() => __SplashScreenState();
+// }
+
+// class __SplashScreenState extends State<SplashScreen> {
+//  @override
+//  void initState() {
+//    super.initState();
+//    Timer(Duration(seconds: 3), () {
+//      Navigator.pushNamed(context, MyHomePage.nomeRota);
+//    });
+//  }
+
+// Widget build(BuildContext context) {
+// return Scaffold(
+//        backgroundColor: Colors.black,
+//        body: Column(
+//            mainAxisAlignment: MainAxisAlignment.center,
+//            children: <Widget>[
+//              CircularImageWidget(
+//                imageProvider: AssetImage('images/splashscreenimage.png'),
+//              )
+//            ]));
+//  }
+// }
