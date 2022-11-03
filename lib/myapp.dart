@@ -1,3 +1,4 @@
+import 'package:controle_financas/views/login/login.dart';
 import 'package:flutter/material.dart';
 
 import 'package:controle_financas/views/my_homepage.dart';
@@ -14,7 +15,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: MyHomePage(),
+      home: Login(),
             //A rota do splashscreen
       // initialRoute: SplashScreen.nomeRota,
       //  routes: {
