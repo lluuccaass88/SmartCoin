@@ -2,7 +2,9 @@
 
 import 'dart:ui';
 
+import 'package:controle_financas/models/user.dart';
 import 'package:flutter/material.dart';
+import 'package:controle_financas/util/validator.dart'; 
 
 import '../../widgets/circular_image_widget.dart';
 
@@ -16,6 +18,11 @@ class Login extends StatefulWidget {
 }
 
 class _Login extends State<Login> {
+   
+  final _formKey = GlobalKey<FormState>();
+
+   bool validate = false;
+   
    @override
     Widget build(BuildContext context){
       return Scaffold(
@@ -71,7 +78,7 @@ class _Login extends State<Login> {
               ),
 
             ),
-              //validator: Validador.validarNome(),          
+              validator: Validador.validarEmail(),         
             maxLength: 50,
           ),
         ),
