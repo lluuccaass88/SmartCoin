@@ -3,6 +3,7 @@
 import 'dart:ui';
 
 import 'package:controle_financas/models/user.dart';
+import 'package:controle_financas/views/register/register.dart';
 import 'package:flutter/material.dart';
 import 'package:controle_financas/util/validator.dart'; 
 
@@ -20,6 +21,30 @@ class Login extends StatefulWidget {
 class _Login extends State<Login> {
    
   final _formKey = GlobalKey<FormState>();
+
+  User user = User();
+
+  final controllerEmail = TextEditingController();
+  final controllerPassword = TextEditingController();
+
+    @override
+  void dispose() {
+    controllerEmail.dispose();
+    controllerPassword.dispose();
+    super.dispose();
+  }
+
+    @override
+  void initState() { //Fica escutando o controller e Salva na entidade pessoa 
+    super.initState();
+    controllerEmail.addListener(() {
+      print(controllerEmail.text);
+      user?.email = controllerEmail.text;
+    });
+    controllerPassword.addListener(() {
+      user?.password = controllerPassword.text;
+    });
+  }
 
    bool validate = false;
    
@@ -49,8 +74,11 @@ class _Login extends State<Login> {
                   ),
                 //Colocar uma margin aqui
               ),
-              _formUI(),
-          ],
+              Form(
+                key: _formKey,
+                child: _formUI(),
+              )
+              ]
         ),
         backgroundColor: Color.fromARGB(255, 0, 0, 0),
       );
@@ -113,32 +141,51 @@ class _Login extends State<Login> {
         ),
 
         const SizedBox(height: 15.0),
+        
         ElevatedButton(
-          onPressed: inserir,
-          style: ElevatedButton.styleFrom(
-            primary: Colors.lightBlueAccent
-          ),
-          child: const Text(
-            'Entrar',
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 25.0,
-              fontWeight: FontWeight.w600,
-            )
+              onPressed: inserir,
+              style: ElevatedButton.styleFrom(
+                primary: Colors.lightBlueAccent
+              ),
+              child: const Text(
+                'Entrar',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 25.0,
+                  fontWeight: FontWeight.w600,
+                )
+              ),
             ),
-        )
 
+            Container(
+              margin: EdgeInsets.only(top: 10),
+              child: InkWell(
+                child: Text(
+                  'Cadestre-se',
+                  style: TextStyle(
+                    color: Colors.lightBlueAccent
+                  ),
+                  ),
+                onTap: (){
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
 
-
-          //AQUI ENTRA UM BOTAO PARA ENVIAR
-
+                      builder: (context) => Register(),
+                    )
+                  );
+                }
+              ),  
+            )
       ]
     );
       
   }
 
-    inserir() {
-   print("oi");
+  inserir() {
+    int i = 0;
+    print(user.email); 
+   //print("Email: " + i + "Senha: " + user.password);
   }
 
 }   

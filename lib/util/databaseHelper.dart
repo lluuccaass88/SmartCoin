@@ -35,11 +35,18 @@ static Database? _database;
     await db.execute('''
           CREATE TABLE $table (
             id INTEGER PRIMARY KEY,
-            nome TEXT NOT NULL,
+            name TEXT NOT NULL,
+            email TEXT NOT NULL,
+            password TEXT NOT NULL
+            balance INTEGER NOT NULL
             saldo INTEGER NOT NULL,
           )
           ''');
   }
 
+  Future<int> insert(Map<String, dynamic> row) async {
+    Database db = await instance.database;
+    return await db.insert(table, row);
+  }
 
 }

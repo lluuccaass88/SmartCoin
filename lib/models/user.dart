@@ -1,15 +1,27 @@
 //import 'package:agenda_aniversario_bd/database_helper.dart';
 
 class User {
- final int? id;
- final String? nome;
- final int saldo;
+  int? id;
+  String? name;
+  String? email;
+  String? password;
+  double balance = 0;
+  
 
- User(
-  this.id,
-  this.nome,
-  this.saldo
-);
+ User();
+
+  Map<String, dynamic> toMap() {
+    Map<String, dynamic> map = {
+      'name': name,
+      'email': email,
+      'password': password,
+      'balance': balance
+    };
+    if (id != null) {
+      map['id'] = id;
+    }
+    return map;
+  }
 
 // User.fromMap(Map map) {
 //    id = map[‘id’];
