@@ -66,11 +66,13 @@ class _RegisterState extends State<Register> {
         title: const Text('Cadastro'),
         backgroundColor: Colors.black,
       ),
-      body: SingleChildScrollView( 
-        child: Form(
-          key: _formKey,
-          child: _formUI(),
-        ),
+      body: Column( 
+        children: [
+          Form(
+            key: _formKey,
+            child: _formUI(),
+          ),
+        ],
       )
     );
   }
@@ -192,31 +194,44 @@ class _RegisterState extends State<Register> {
       
       if(emailFound == null){
         await DatabaseHelper.insert(controllerNome.text, controllerEmail.text, controllerPassword.text);
-        return AlertDialog(
-          title: const Text('SmartCoin'),
-          content: const Text('Cadastro realizado com sucesso!'),
-          actions: [
-            TextButton(
-              child: const Text('Voltar para a tela de login'),
-              onPressed: () {
-                Navigator.pushNamed(context, Login.nomeRota);
-              },
-            ),
-          ],
+        showDialog(
+          context: context,
+          barrierDismissible: false,
+          builder: (context) {
+            return AlertDialog(
+              title: const Text('SmartCoin'),
+              content: const Text('Cadastro realizado com sucesso!'),
+              actions: [
+                TextButton(
+                  child: const Text('Voltar para o login'),
+                  onPressed: () {
+                    Navigator.pushNamed(context, Login.nomeRota);
+                  },
+                ),
+              ],
+            );
+          },
         );
+
+
       }else{
-        print("n rolou");
-        return AlertDialog(
-          title: const Text('SmartCoin'),
-          content: const Text('Este email já esta cadastrado!'),
-          actions: [
-            TextButton(
-              child: const Text('Voltar para a tela de login'),
-              onPressed: () {
-                Navigator.pushNamed(context, Login.nomeRota);
-              },
-            ),
-          ],
+        showDialog(
+          context: context,
+          barrierDismissible: false,
+          builder: (context) {
+            return AlertDialog(
+              title: const Text('SmartCoin'),
+              content: const Text('Este email já esta cadastrado!'),
+              actions: [
+                TextButton(
+                  child: const Text('Voltar para o login'),
+                  onPressed: () {
+                    Navigator.pushNamed(context, Login.nomeRota);
+                  },
+                ),
+              ],
+            );
+          },
         );
       }
       
@@ -224,24 +239,4 @@ class _RegisterState extends State<Register> {
       
       }
 
-      _voltarDialog() {
-    showDialog(
-      context: context,
-      barrierDismissible: false,
-      builder: (context) {
-        return AlertDialog(
-          title: const Text('Cadastro de Aniversários'),
-          content: const Text('Cadastro Efetuado Com Sucesso !'),
-          actions: [
-            TextButton(
-              child: const Text('Voltar para a tela inicial'),
-              onPressed: () {
-                Navigator.pushNamed(context, Login.nomeRota);
-              },
-            ),
-          ],
-        );
-      },
-    );
-  }
 }

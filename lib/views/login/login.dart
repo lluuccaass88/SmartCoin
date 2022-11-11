@@ -7,6 +7,7 @@ import 'package:controle_financas/views/register/register.dart';
 import 'package:flutter/material.dart';
 import 'package:controle_financas/util/validator.dart'; 
 
+import '../../util/databaseHelper.dart';
 import '../../widgets/circular_image_widget.dart';
 
 class Login extends StatefulWidget {
@@ -38,7 +39,6 @@ class _Login extends State<Login> {
   void initState() { //Fica escutando o controller e Salva na entidade pessoa 
     super.initState();
     controllerEmail.addListener(() {
-      print(controllerEmail.text);
       user?.email = controllerEmail.text;
     });
     controllerPassword.addListener(() {
@@ -93,7 +93,7 @@ class _Login extends State<Login> {
           alignment: Alignment.center,
           width: 500,
           child: TextFormField(
-                //controller: controllerNome, 
+          controller: controllerEmail, 
             style: TextStyle ( color: Colors.white ),
             decoration: InputDecoration(
               hintText: 'Email',
@@ -106,7 +106,7 @@ class _Login extends State<Login> {
               ),
 
             ),
-              validator: Validador.validarEmail(),         
+            validator: Validador.validarEmail(),         
             maxLength: 50,
           ),
         ),
@@ -121,7 +121,7 @@ class _Login extends State<Login> {
             alignment: Alignment.center,
             width: 500,
             child: TextFormField(
-                //controller: controllerNome,   
+              controller: controllerPassword,   
               style: TextStyle ( color: Colors.white ),
               obscureText: true,
               obscuringCharacter: "*",
@@ -143,7 +143,7 @@ class _Login extends State<Login> {
         const SizedBox(height: 15.0),
         
         ElevatedButton(
-              onPressed: inserir,
+              onPressed: realizarLogin,
               style: ElevatedButton.styleFrom(
                 primary: Colors.lightBlueAccent
               ),
@@ -182,11 +182,70 @@ class _Login extends State<Login> {
       
   }
 
-  inserir() {
+  realizarLogin() {
     int i = 0;
-    print("oi"); 
+    verfEmail();
+    verfPassword();
+    print("oiws"); 
    //print("Email: " + i + "Senha: " + user.password);
   }
 
-}   
+  verfEmail() async{
+    WidgetsFlutterBinding.ensureInitialized();
+    await DatabaseHelper.connect();
+    
+    var emailFound = await DatabaseHelper.getEmail(controllerEmail.text);
+
+    if(emailFound == null){
+        showDialog(
+          context: context,
+          barrierDismissible: false,
+          builder: (context) {
+            return AlertDialog(
+              title: const Text('SmartCoin'),
+              content: const Text('Email não encontrado!'),
+              actions: [
+                TextButton(
+                  child: const Text('Ok'),
+                  onPressed: () {
+                    Navigator.pushNamed(context, Login.nomeRota);
+                  },
+                ),
+              ],
+            );
+          },
+        );
+    }
+  }
+
+  verfPassword() async{
+    WidgetsFlutterBinding.ensureInitialized();
+    await DatabaseHelper.connect();
+    
+    var passwordFound = await DatabaseHelper.getPassword(controllerPassword.text);
+
+    if(passwordFound == null){
+        showDialog(
+          context: context,
+          barrierDismissible: false,
+          builder: (context) {
+            return AlertDialog(
+              title: const Text('SmartCoin'),
+              content: const Text('Senha incorreta!'),
+              actions: [
+                TextButton(
+                  child: const Text('Ok'),
+                  onPressed: () {
+                    Navigator.pushNamed(context, Login.nomeRota);
+                  },
+                ),
+              ],
+            );
+          },
+        );
+    }
+  }
+}
+
+
 

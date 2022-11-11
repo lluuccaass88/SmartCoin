@@ -31,6 +31,11 @@ class DatabaseHelper {
     return emailFound;
   }
 
+  static getPassword(String password) async{
+    var emailFound = await userCollection.findOne(where.eq("password", '${password}').fields(['str_field','email']));
+    return emailFound;
+  }
+
 }
 
 

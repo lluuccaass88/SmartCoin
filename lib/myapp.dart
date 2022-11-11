@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 
 import 'package:controle_financas/views/my_homepage.dart';
 import 'package:controle_financas/views/splashScreen';
+import 'package:controle_financas/views/login/login.dart';
+import 'package:controle_financas/views/register/register.dart';
+
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -15,11 +18,14 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: Login(),
-            //A rota do splashscreen
-      // initialRoute: SplashScreen.nomeRota,
-      //  routes: {
-      //    SplashScreen.nomeRota: (context) => SplashScreen(),
+      //home: Login(),
+      initialRoute: Login.nomeRota,
+      routes: {
+        Login.nomeRota:((context) => Login()),
+        Register.nomeRota:((context) => Register()),
+        MyHomePage.nomeRota:(context) => MyHomePage(),
+      },
+
       );
   }
 }
