@@ -184,7 +184,7 @@ class _Login extends State<Login> {
 
   inserir() {
     int i = 0;
-    print(user.email); 
+    print("oi"); 
    //print("Email: " + i + "Senha: " + user.password);
   }
 

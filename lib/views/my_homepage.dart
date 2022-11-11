@@ -115,11 +115,6 @@ Widget _balanceContainerWidth() {
   );
 }
 
-//Bd Teste
-_connectBD(){
-  final DatabaseHelper dbHelper = DatabaseHelper.instance;
-  print(dbHelper);
-}
 
 
 //Style

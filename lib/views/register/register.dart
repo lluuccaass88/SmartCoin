@@ -42,6 +42,7 @@ class _RegisterState extends State<Register> {
     super.initState();
     controllerNome.addListener(() {
       user?.name = controllerNome.text;
+
     });
     controllerEmail.addListener(() {
       user?.email = controllerEmail.text;
@@ -54,7 +55,8 @@ class _RegisterState extends State<Register> {
   bool validate = false;
 
   //References the manager database class
-  final DatabaseHelper dbHelper = DatabaseHelper.instance;
+  //final DatabaseHelper dbHelper = DatabaseHelper.instance;
+
 
   @override
   Widget build(BuildContext context) {
@@ -83,7 +85,7 @@ class _RegisterState extends State<Register> {
           alignment: Alignment.center,
           width: 500,
           child: TextFormField(
-                //controller: controllerNome, 
+            controller: controllerNome, 
             style: TextStyle ( color: Colors.white ),
             // ignore: prefer_const_constructors
             decoration: InputDecoration(
@@ -113,7 +115,7 @@ class _RegisterState extends State<Register> {
           alignment: Alignment.center,
           width: 500,
           child: TextFormField(
-                //controller: controllerNome, 
+            controller: controllerEmail, 
             style: TextStyle ( color: Colors.white ),
             // ignore: prefer_const_constructors
             decoration: InputDecoration(
@@ -127,7 +129,7 @@ class _RegisterState extends State<Register> {
               ),
 
             ),
-              validator: Validador.validarEmail(),         
+            validator: Validador.validarEmail(),         
             maxLength: 50,
           ),
         ),
@@ -143,7 +145,7 @@ class _RegisterState extends State<Register> {
           alignment: Alignment.center,
           width: 500,
           child: TextFormField(
-                //controller: controllerNome,   
+          controller: controllerPassword,   
             style: TextStyle ( color: Colors.white ),
             obscureText: true,
             obscuringCharacter: "*",
@@ -182,20 +184,45 @@ class _RegisterState extends State<Register> {
       
   }
 
-    inserir() {
-      if (_formKey.currentState!.validate()) {
-        // Sem erros na validação
-        _formKey.currentState!.save();
-        Map<String, dynamic> row = user!.toMap();
-        dbHelper.insert(row);
-        _voltarDialog();
-      } else {
-        // erro de validação
-        setState(() {
-          validate = true;
-        });
+    inserir() async {
+      var emailFound;
+      WidgetsFlutterBinding.ensureInitialized();
+      await DatabaseHelper.connect();
+      emailFound = await DatabaseHelper.getEmail(controllerEmail.text);
+      
+      if(emailFound == null){
+        await DatabaseHelper.insert(controllerNome.text, controllerEmail.text, controllerPassword.text);
+        return AlertDialog(
+          title: const Text('SmartCoin'),
+          content: const Text('Cadastro realizado com sucesso!'),
+          actions: [
+            TextButton(
+              child: const Text('Voltar para a tela de login'),
+              onPressed: () {
+                Navigator.pushNamed(context, Login.nomeRota);
+              },
+            ),
+          ],
+        );
+      }else{
+        print("n rolou");
+        return AlertDialog(
+          title: const Text('SmartCoin'),
+          content: const Text('Este email já esta cadastrado!'),
+          actions: [
+            TextButton(
+              child: const Text('Voltar para a tela de login'),
+              onPressed: () {
+                Navigator.pushNamed(context, Login.nomeRota);
+              },
+            ),
+          ],
+        );
       }
-    }
+      
+      
+      
+      }
 
       _voltarDialog() {
     showDialog(
